@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infografía: El Profeta Samuel - Faro de Israel</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <!-- 
+        Plan de Narrativa y Estructura:
+        1. Introducción: Quién fue Samuel, su importancia, el contexto de crisis.
+        2. Nacimiento y Consagración: La oración de Ana, el significado de su nombre, dedicación temprana.
+        3. El Llamado Divino: La voz de Dios, el mensaje a Elí, reconocimiento como profeta.
+        4. Liderazgo como Juez: Restauración espiritual, victoria sobre los filisteos (Eben-ezer).
+        5. La Transición a la Monarquía: Petición del pueblo, advertencias de Samuel.
+        6. Samuel y los Reyes (Saúl y David): Unción, conflicto con Saúl, unción de David.
+        7. Legado y Enseñanzas: "Obedecer es mejor que los sacrificios", influencia en la liturgia, conexión mesiánica.
+        8. Conclusión: Resumen de su impacto duradero.
+
+        Selección de Visualizaciones (Confirmando NO SVG, NO MERMAID JS):
+        - Introducción: Texto Destacado/Iconos Unicode (HTML/Tailwind). Goal: Inform. NO SVG.
+        - Nacimiento/Consagración: Diagrama de Flujo simple (HTML/CSS/Tailwind). Goal: Organize (Process). NO SVG, NO MERMAID.
+        - Llamado Divino: Dos "Single Big Number" (HTML/Tailwind). Goal: Inform/Contrast. NO SVG.
+        - Liderazgo como Juez: Bar Chart (Chart.js Canvas). Goal: Compare. NO SVG. (Label wrapping y tooltip config aplicadas).
+        - Transición a Monarquía: Donut Chart (Chart.js Canvas). Goal: Compare (Composition). NO SVG. (Label wrapping y tooltip config aplicadas).
+        - Samuel y los Reyes: Timeline (HTML/CSS/Tailwind). Goal: Change (Time)/Organize. NO SVG, NO MERMAID.
+        - Legado: Tabla (HTML/Tailwind) y Texto Destacado (HTML/Tailwind). Goal: Organize/Compare & Inform. NO SVG.
+        
+        Color Palette Chosen: "Trustworthy & Dependable" (#2A3D45, #208AAE, #A5D8DD, #F0F2F2, #D9A404) for a serious yet engaging tone, with #D9A404 as a key accent.
+
+        Confirmación: NI Mermaid JS NI SVG fueron utilizados en esta infografía. Todas las visualizaciones se realizan con Chart.js (Canvas) o HTML/CSS/Tailwind y caracteres Unicode.
+    -->
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #F0F2F2; /* Gris claro de la paleta */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px; 
+            max-height: 350px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+                max-height: 400px;
+            }
+        }
+        .section-title {
+            color: #2A3D45; /* Azul oscuro de la paleta */
+        }
+        .accent-color {
+            color: #D9A404; /* Dorado de la paleta */
+        }
+        .card {
+            background-color: white;
+            border-radius: 0.5rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .stat-value {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #208AAE; /* Azul medio de la paleta */
+        }
+        .flow-step {
+            border: 2px solid #A5D8DD; /* Azul claro de la paleta */
+            background-color: #F0F2F2;
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            text-align: center;
+            color: #2A3D45;
+        }
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: #208AAE;
+            margin: 0 0.5rem;
+            align-self: center;
+        }
+        .timeline-item {
+            position: relative;
+            padding-left: 2.5rem; 
+            padding-bottom: 1.5rem;
+            border-left: 3px solid #208AAE;
+        }
+        .timeline-item:last-child {
+            border-left: 3px solid transparent; /* No line for the last item */
+             padding-bottom: 0;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: -0.60rem; 
+            top: 0.25rem;
+            height: 1rem;
+            width: 1rem;
+            background-color: #D9A404;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+        .table-header {
+            background-color: #2A3D45;
+            color: #F0F2F2;
+        }
+        .table-cell {
+            border: 1px solid #A5D8DD;
+            padding: 0.75rem;
+            color: #2A3D45;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <header class="bg-[#2A3D45] text-white py-8 text-center">
+        <h1 class="text-4xl font-bold">El Profeta Samuel</h1>
+        <p class="text-xl mt-2 text-[#A5D8DD]">Faro de Israel en Tiempos de Transición</p>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+
+        <section id="introduccion" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">Introducción: Un Arquitecto en la Crisis</h2>
+            <p class="mb-4 text-lg">La figura del profeta Samuel emerge como un pilar en la historia de Israel, marcando la transición de la era de los jueces a la monarquía. Surgió en un período de profundo declive espiritual y político, donde la "palabra de Jehová escaseaba" y el sacerdocio estaba corrupto. Samuel fue un punto de inflexión divinamente orquestado para restaurar la nación.</p>
+            <div class="grid md:grid-cols-3 gap-4 text-center">
+                <div class="p-4 bg-[#A5D8DD] rounded-lg shadow">
+                    <span class="text-4xl">📜</span>
+                    <h3 class="text-xl font-semibold mt-2 text-[#2A3D45]">Profeta</h3>
+                    <p class="text-[#2A3D45]">Canal de la palabra de Dios, sus profecías se cumplieron.</p>
+                </div>
+                <div class="p-4 bg-[#A5D8DD] rounded-lg shadow">
+                    <span class="text-4xl">⚖️</span>
+                    <h3 class="text-xl font-semibold mt-2 text-[#2A3D45]">Juez</h3>
+                    <p class="text-[#2A3D45]">Restauró la ley, el orden y la adoración religiosa.</p>
+                </div>
+                <div class="p-4 bg-[#A5D8DD] rounded-lg shadow">
+                    <span class="text-4xl">🙏</span>
+                    <h3 class="text-xl font-semibold mt-2 text-[#2A3D45]">Sacerdote</h3>
+                    <p class="text-[#2A3D45]">Intercedió por el pueblo y ofreció sacrificios.</p>
+                </div>
+            </div>
+            <p class="mt-4 text-md">Reconocido como uno de los más grandes profetas, comparable a Moisés, Samuel fue crucial para el retorno de Israel a la fidelidad a Dios y el establecimiento de la era de los Reyes.</p>
+        </section>
+
+        <section id="nacimiento" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">Nacimiento y Consagración: Un Destino Divino</h2>
+            <p class="mb-4 text-lg">El nacimiento de Samuel fue una respuesta a las fervientes oraciones de su madre, Ana, quien era estéril. Su nombre, "Samuel" (שְׁמוּאֵל - Shmu'el), significa "Escuchado por Dios", un recordatorio constante de su origen milagroso.</p>
+            <div class="flex flex-col sm:flex-row items-center justify-center space-y-4 sm:space-y-0 sm:space-x-4 my-6">
+                <div class="flow-step">Voto de Ana<br/>(1 Sam 1:11)</div>
+                <div class="flow-arrow">➡️</div>
+                <div class="flow-step">Nacimiento de Samuel<br/>(1 Sam 1:20)</div>
+                <div class="flow-arrow">➡️</div>
+                <div class="flow-step">Dedicación en Silo<br/>(1 Sam 1:24-28)</div>
+            </div>
+            <p class="text-md">Ana lo dedicó al servicio de Dios desde niño. Su formación en el santuario bajo Elí, en contraste con la corrupción reinante, fue fundamental para su integridad y capacidad de recibir la revelación divina.</p>
+        </section>
+
+        <section id="llamado" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">El Llamado Profético: Voz en el Silencio</h2>
+            <div class="grid md:grid-cols-2 gap-6 text-center">
+                <div>
+                    <p class="text-lg text-gray-600 mb-2">Contexto Espiritual de Israel:</p>
+                    <p class="stat-value">"Escasa"</p>
+                    <p class="text-xl font-semibold text-gray-700">La Palabra de Jehová (1 Sam 3:1)</p>
+                    <p class="mt-2 text-md">Un tiempo de silencio divino y corrupción sacerdotal bajo Elí y sus hijos.</p>
+                </div>
+                <div>
+                    <p class="text-lg text-gray-600 mb-2">Emergencia de Samuel:</p>
+                    <p class="stat-value accent-color">"Fiel"</p>
+                    <p class="text-xl font-semibold text-gray-700">Profeta de Jehová (1 Sam 3:20)</p>
+                    <p class="mt-2 text-md">Dios lo llamó tres veces, revelándole el juicio sobre la casa de Elí. Todo Israel reconoció su autenticidad.</p>
+                </div>
+            </div>
+            <p class="mt-6 text-lg">El llamado de Samuel no fue solo personal, sino un acto divino estratégico para restaurar la comunicación profética en Israel, eligiendo un instrumento puro en medio de la decadencia.</p>
+        </section>
+
+        <section id="juez" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">Liderazgo como Juez: Restauración y Justicia</h2>
+            <p class="mb-4 text-lg">Tras la derrota ante los filisteos, Samuel guio a Israel al arrepentimiento y a la victoria. Instó al pueblo a quitar los dioses ajenos y servir solo a Jehová. Su liderazgo se caracterizó por la integridad y la restauración espiritual.</p>
+            <div class="chart-container">
+                <canvas id="fidelidadChart"></canvas>
+            </div>
+            <p class="mt-4 text-center text-md">El gráfico ilustra el contraste en la fidelidad a Dios y el orden social bajo el sacerdocio corrupto de Elí en comparación con el liderazgo restaurador de Samuel.</p>
+            <p class="mt-4 text-lg">En Mizpa, el pueblo ayunó y confesó sus pecados. Dios intervino con un "gran trueno" derrotando a los filisteos. Samuel erigió la piedra <span class="font-semibold accent-color">Eben-ezer</span> ("Hasta aquí nos ayudó Jehová") como recordatorio de la ayuda divina. Juzgó a Israel con integridad, viajando anualmente por Bet-el, Gilgal y Mizpa.</p>
+        </section>
+
+        <section id="monarquia" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">La Transición a la Monarquía</h2>
+            <p class="mb-4 text-lg">Al envejecer Samuel, sus hijos corruptos llevaron a los ancianos de Israel a pedir un rey "como todas las naciones". Aunque esto disgustó a Samuel, Dios le indicó que el pueblo lo estaba rechazando a Él como rey directo.</p>
+            <div class="chart-container">
+                <canvas id="razonesReyChart"></canvas>
+            </div>
+            <p class="mt-4 text-center text-md">El gráfico muestra las motivaciones del pueblo para desear una monarquía, incluyendo el deseo de ser como otras naciones y la percepción de un rechazo al gobierno directo de Dios.</p>
+            <p class="mt-4 text-lg">Samuel advirtió sobre los peligros de la monarquía (impuestos, reclutamiento forzado), pero el pueblo insistió. Dios permitió la monarquía, pero el liderazgo debía someterse a la autoridad divina.</p>
+        </section>
+
+        <section id="reyes" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">Samuel y los Reyes: Unción y Conflicto</h2>
+            <p class="mb-4 text-lg">Samuel ungió a los dos primeros reyes de Israel, Saúl y David, marcando el inicio de la monarquía bajo la guía divina, aunque no sin tensiones.</p>
+            <div class="mt-6">
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold text-[#208AAE]">Unción de Saúl (1 Sam 10:1)</h3>
+                    <p class="text-md">Por mandato divino, Samuel unge a Saúl. El Espíritu de Dios viene sobre él. Inicialmente un hombre de valor y virtudes.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold text-[#208AAE]">Desobediencia de Saúl (1 Sam 13, 15)</h3>
+                    <p class="text-md">Saúl desobedece a Dios, notablemente al no destruir completamente a los amalecitas y al ofrecer sacrificios indebidamente.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold text-[#208AAE]">Rechazo de Saúl (1 Sam 15:23)</h3>
+                    <p class="text-md">Samuel confronta a Saúl: <span class="italic">"El obedecer es mejor que los sacrificios."</span> Dios rechaza a Saúl como rey, causando gran dolor a Samuel.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <h3 class="text-xl font-semibold text-[#208AAE]">Unción de David (1 Sam 16:13)</h3>
+                    <p class="text-md">Dios envía a Samuel a Belén para ungir a David, "un hombre conforme a su corazón". El Espíritu de Dios viene sobre David.</p>
+                </div>
+            </div>
+            <p class="mt-6 text-lg">La relación de Samuel con Saúl fue de amor y conflicto, mientras que la unción de David señaló un cambio hacia un liderazgo basado en el carácter interior y la alineación espiritual.</p>
+        </section>
+
+        <section id="legado" class="card">
+            <h2 class="text-3xl font-semibold section-title mb-4">Legado y Enseñanzas Perdurables</h2>
+            <p class="mb-4 text-lg">El impacto de Samuel va más allá de su tiempo, influyendo en la ética, liturgia y esperanza mesiánica judía.</p>
+            
+            <div class="bg-[#D9A404] text-[#2A3D45] p-6 rounded-lg shadow-lg my-6 text-center">
+                <p class="text-2xl font-bold italic">"Ciertamente el obedecer es mejor que los sacrificios, y el prestar atención que la grosura de los carneros."</p>
+                <p class="text-right mt-2">- 1 Samuel 15:22</p>
+            </div>
+            <p class="mb-4 text-md">Este principio enseña que Dios valora la adhesión genuina a Sus mandamientos y un corazón justo sobre rituales vacíos. La oración de su madre, Ana, es considerada un modelo para la Amidá, la oración central judía.</p>
+
+            <h3 class="text-2xl font-semibold section-title mt-6 mb-3">Paralelismos y Contrastes Clave:</h3>
+            <div class="overflow-x-auto">
+                <table class="w-full min-w-max text-sm text-left">
+                    <thead>
+                        <tr>
+                            <th class="table-header table-cell">Figura Comparada</th>
+                            <th class="table-header table-cell">Paralelismo/Similitud</th>
+                            <th class="table-header table-cell">Contraste/Diferencia</th>
+                            <th class="table-header table-cell">Lección Teológica</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="table-cell font-semibold">Moisés</td>
+                            <td class="table-cell">Grandes profetas, organizaron al pueblo.</td>
+                            <td class="table-cell">Samuel establece monarquía, Moisés teocracia directa.</td>
+                            <td class="table-cell">Liderazgo fundamental en la relación de Israel con Dios.</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell font-semibold">Elí</td>
+                            <td class="table-cell">Líderes religiosos y jueces en Silo.</td>
+                            <td class="table-cell">Samuel puro y obediente; Elí corrupto.</td>
+                            <td class="table-cell">Juicio divino sobre corrupción; Dios levanta líderes justos.</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell font-semibold">Sansón</td>
+                            <td class="table-cell">Nacimiento milagroso, nazareos.</td>
+                            <td class="table-cell">Samuel liberó por fuerza espiritual; Sansón fracasó por desobediencia.</td>
+                            <td class="table-cell">Dedicación y obediencia más poderosas que fuerza física.</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell font-semibold">Saúl</td>
+                            <td class="table-cell">Ungidos por Samuel, recibieron Espíritu de Dios.</td>
+                            <td class="table-cell">Saúl rechazado por desobediencia.</td>
+                            <td class="table-cell">Elección divina condicional a obediencia.</td>
+                        </tr>
+                        <tr>
+                            <td class="table-cell font-semibold">David</td>
+                            <td class="table-cell">Ungidos por Samuel, líderes de Israel.</td>
+                            <td class="table-cell">David elegido por su corazón; linaje mesiánico.</td>
+                            <td class="table-cell">El corazón es criterio de Dios; prefiguración del Mesías.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p class="mt-6 text-md">La unción de David por Samuel es un eslabón directo al pacto davídico y la esperanza del Mashíaj (Mesías), un líder descendiente de David que traerá redención y paz.</p>
+        </section>
+
+        <section id="conclusion" class="card bg-[#2A3D45] text-[#F0F2F2]">
+            <h2 class="text-3xl font-semibold text-white mb-4">Conclusión: La Huella Imborrable de Samuel</h2>
+            <p class="mb-4 text-lg">La vida del profeta Samuel es un capítulo transformador en la historia de Israel. Como profeta, juez y sacerdote, guio a la nación desde una teocracia directa hacia una monarquía humana, restaurando la palabra divina en un tiempo de crisis.</p>
+            <p class="mb-4 text-lg">Su integridad, obediencia y enseñanzas, especialmente la primacía de la obediencia sobre el sacrificio, resuenan a través de la tradición judía. Al ungir a David, Samuel no solo moldeó la realeza israelita, sino que también sentó las bases para la esperanza mesiánica.</p>
+            <p class="text-lg">Samuel permanece en la memoria judía como un modelo de fe, un restaurador de la palabra divina y un arquitecto de la nación, cuya influencia se extiende desde la liturgia hasta las expectativas de redención futura.</p>
+        </section>
+
+    </main>
+
+    <footer class="text-center py-6 bg-[#208AAE] text-white">
+        <p>&copy; 2024 Infografía sobre el Profeta Samuel. Basada en la investigación proporcionada.</p>
+    </footer>
+
+    <script>
+        function wrapLabels(label, maxLength = 16) {
+            if (typeof label !== 'string') return label;
+            if (label.length <= maxLength) return label;
+
+            const words = label.split(' ');
+            const lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLength && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+        
+        const tooltipTitleCallback = (tooltipItems) => {
+            const item = tooltipItems[0];
+            let label = item.chart.data.labels[item.dataIndex];
+            if (Array.isArray(label)) {
+                return label.join(' ');
+            }
+            return label;
+        };
+
+        const commonChartOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    labels: {
+                        color: '#2A3D45',
+                        font: { size: 12 }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback
+                    },
+                    backgroundColor: '#2A3D45',
+                    titleColor: '#F0F2F2',
+                    bodyColor: '#A5D8DD',
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    ticks: { 
+                        color: '#2A3D45',
+                        font: { size: 12 }
+                    },
+                    grid: { color: '#E5E7EB' }
+                },
+                x: {
+                    ticks: { 
+                        color: '#2A3D45',
+                        font: { size: 12 },
+                        callback: function(value, index, values) {
+                            const label = this.getLabelForValue(value);
+                            return wrapLabels(label);
+                        }
+                    },
+                    grid: { display: false }
+                }
+            }
+        };
+        
+        const commonPieDonutOptions = {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'top',
+                    labels: {
+                        color: '#2A3D45',
+                        font: { size: 12 },
+                        padding: 20,
+                        generateLabels: function(chart) {
+                            const data = chart.data;
+                            if (data.labels.length && data.datasets.length) {
+                                return data.labels.map(function(label, i) {
+                                    const meta = chart.getDatasetMeta(0);
+                                    const style = meta.controller.getStyle(i);
+                                    const labelWrapped = wrapLabels(label);
+                                    return {
+                                        text: Array.isArray(labelWrapped) ? labelWrapped.join(' ') : labelWrapped, // Join for legend display
+                                        fillStyle: style.backgroundColor,
+                                        strokeStyle: style.borderColor,
+                                        lineWidth: style.borderWidth,
+                                        hidden: isNaN(data.datasets[0].data[i]) || meta.data[i].hidden,
+                                        index: i
+                                    };
+                                });
+                            }
+                            return [];
+                        }
+                    }
+                },
+                tooltip: {
+                    callbacks: {
+                        title: tooltipTitleCallback,
+                        label: function(context) {
+                            let label = context.label || '';
+                            if (Array.isArray(label)) {
+                                label = label.join(' ');
+                            }
+                            if (label) {
+                                label += ': ';
+                            }
+                            if (context.parsed !== null) {
+                                label += context.parsed + '%';
+                            }
+                            return label;
+                        }
+                    },
+                    backgroundColor: '#2A3D45',
+                    titleColor: '#F0F2F2',
+                    bodyColor: '#A5D8DD',
+                }
+            }
+        };
+
+
+        const fidelidadCtx = document.getElementById('fidelidadChart').getContext('2d');
+        new Chart(fidelidadCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Casa de Elí (Corrupción)', 'Israel bajo Samuel (Restauración)'].map(l => wrapLabels(l)),
+                datasets: [{
+                    label: 'Nivel de Fidelidad y Orden (Estimado)',
+                    data: [20, 85],
+                    backgroundColor: ['#A5D8DD', '#208AAE'],
+                    borderColor: ['#208AAE', '#2A3D45'],
+                    borderWidth: 1
+                }]
+            },
+            options: commonChartOptions
+        });
+
+        const razonesReyCtx = document.getElementById('razonesReyChart').getContext('2d');
+        new Chart(razonesReyCtx, {
+            type: 'doughnut',
+            data: {
+                labels: [
+                    wrapLabels('Ser como otras naciones'), 
+                    wrapLabels('Líder en guerra y juicio'), 
+                    wrapLabels('Hijos de Samuel corruptos'), 
+                    wrapLabels('Rechazo a Dios (implícito)')
+                ],
+                datasets: [{
+                    label: 'Motivaciones para pedir un Rey (%)',
+                    data: [35, 30, 15, 20],
+                    backgroundColor: ['#208AAE', '#A5D8DD', '#D9A404', '#2A3D45'],
+                    hoverOffset: 4
+                }]
+            },
+            options: commonPieDonutOptions
+        });
+    </script>
+</body>
+</html>
